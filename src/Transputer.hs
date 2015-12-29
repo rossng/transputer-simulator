@@ -1,7 +1,8 @@
-module Transputer ( Op(..), Transputer ) where
+module Transputer ( Op(..), Transputer(..), Registers(..), StatusRegisters(..) ) where
 
 import Data.ByteString
 import Data.Int ( Int32 )
+import Control.Lens
 
 data Op = Prefix
         | NegativePrefix
@@ -119,30 +120,30 @@ data Op = Prefix
         | FormDoubleWordSubscript
     deriving (Show)
 
-data TransputerRegisters = TransputerRegisters {
-   iptr :: Int32,
-   wptr :: Int32,
-   areg :: Int32,
-   breg :: Int32,
-   creg :: Int32,
-   oreg :: Int32,
-   sreg :: StatusRegisters
+data Registers = Registers {
+   _iptr :: Int32,
+   _wptr :: Int32,
+   _areg :: Int32,
+   _breg :: Int32,
+   _creg :: Int32,
+   _oreg :: Int32,
+   _sreg :: StatusRegisters
 } deriving (Show)
 
 data StatusRegisters = StatusRegisters {
-  errorFlag :: Bool,
-  moveBit :: Bool,
-  haltOnErr :: Bool,
-  gotoSnp :: Bool,
-  ioBit :: Bool,
-  timeIns :: Bool,
-  timeDel :: Bool,
-  distAndIns :: Bool
+  _errorFlag :: Bool,
+  _moveBit :: Bool,
+  _haltOnErr :: Bool,
+  _gotoSnp :: Bool,
+  _ioBit :: Bool,
+  _timeIns :: Bool,
+  _timeDel :: Bool,
+  _distAndIns :: Bool
 } deriving (Show)
 
 data Transputer = Transputer {
-  registers :: TransputerRegisters,
-  memory :: ByteString,
-  programEnd :: Int,
-  id :: Int
+  _registers :: Registers,
+  _memory :: ByteString,
+  _programEnd :: Int,
+  _id :: Int
 } deriving (Show)
